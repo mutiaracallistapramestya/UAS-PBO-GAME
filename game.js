@@ -181,3 +181,82 @@ class Hero extends Entity{
         }
     }
 }
+
+class Monster extends Entity{
+    constructor(height, width, x, y){
+        super(height, width, x, y);
+        this.life = 1;
+        this.color = [random(0, 255), random(0, 255), random(0, 255)];
+        this.effect = 0;
+        this.type = random(0, 2);
+    }
+    moveRandom(){
+    
+    }
+   show(){
+        noStroke();
+        if(this.type > 1.5){
+            this.effect = 1;
+            fill(255, 255, 255);
+        }
+        else{
+            fill(0, 0, 0);
+        }
+        circle(this.x, this.y, this.width);
+        this.x -= 2;
+    } 
+}
+
+class Peluru{
+    constructor(x, y){
+        this.x = x;
+        this.y = y;
+    }
+    show(){
+        noStroke();
+        fill(120, 120, 120);
+        ellipse(this.x, this.y, 10, 5);
+        this.x += 4;
+    }
+}
+class Map{
+    constructor(width, height){
+        this.width = width;
+        this.height = height;
+        this.enemy = [];
+    }
+    ground(){
+        noStroke();
+        fill(40, 230, 100);
+        rect(0, 310, width, 400);
+    }
+    init(level){
+        createCanvas(this.width, this.height);
+        for(let i = 0; i < 10 * level; i++){
+            let xE = random(1600, 600);
+            let en = new Monster(10, 20, xE, 300);
+            this.enemy.push(en);
+        }
+    }
+}
+
+class Level{
+    constructor(currentLevel, latestLevel, maxLevel){
+        this.currentLevel = currentLevel;
+        this.latestLevel = latestLevel;
+        this.maxLevel = maxLevel;
+    }
+    setLevel(level){
+        this.currentLevel = level;
+    }
+    getCurrentLevel(){
+        return this.currentLevel;
+    }
+    increaseLevel(){
+        this.currentLevel++;
+    }
+}
+
+
+
+
