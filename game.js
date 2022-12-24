@@ -91,3 +91,93 @@ function draw() {
         text('highest Level : ' + lvl.maxLevel, width / 2, height / 2 + 20);
     }
 }
+
+function keyPressed(){
+    if(keyCode === 32){
+        hero.attack();
+    }
+}
+
+function mousePressed(){
+    if(screen == 0){
+        screen = 1
+        monsta.init(1)
+    }
+    else if(screen == 2){
+        screen = 0
+        hero.score = 0;
+        hero.life = 100;
+        hero.x = 60;
+        hero.y = 280;
+        lvl.setLevel(1)
+    }
+}
+
+class Entity{
+    constructor(height, width, x, y){
+        this.height = height;
+        this.width = width;
+        this.x = x;
+        this.y = y;
+        this.peluru = [];
+    }
+    attack(){
+        let pelor = new Peluru(hero.x + 5, hero.y + 15);
+        this.peluru.push(pelor);
+    }
+    moveRight(){
+        if(this.x < 570){
+            this.x += 1;
+        }
+    }
+    moveLeft(){
+        if(this.x > 0){
+            this.x -= 1;
+        }
+    }
+    moveDown(){
+        if(this.y < 280){
+            this.y += 1;
+        }
+    }
+    moveUp(){
+        if(this.y > 0){
+            this.y -= 1;
+        }
+    }
+}
+
+class Hero extends Entity{
+    constructor(height, width, x, y, life, score){
+        super(height, width, x, y);
+        this.life = life;
+        this.score = score;
+    }
+    show(){
+        noStroke();
+        fill(120, 120, 120);
+        square(this.x, this.y, this.width);
+    }
+    move(){
+        if(keyIsDown(RIGHT_ARROW)){
+            this.moveRight();
+        }
+        else if(keyIsDown(LEFT_ARROW)){
+            this.moveLeft();
+        }
+    }
+    increaseScore(){
+        this.score += 1;
+    }
+    calculateLife(darah){
+        this.life -= darah;
+    }
+    addLife(darah){
+        if(this.life + darah > 100){
+            this.life = 100;
+        }
+        else{
+            this.life += darah;
+        }
+    }
+}
